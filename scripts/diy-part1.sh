@@ -22,5 +22,5 @@ sed -i '$a src-git passwall https://github.com/xiaorouji/openwrt-passwall' feeds
 
 
 # Svn checkout packages from immortalwrt's repository
-git clone --depth=1 https://github.com/immortalwrt/packages -b openwrt-18.06 packages
-git clone --depth=1 https://github.com/immortalwrt/luci -b openwrt-18.06 luci
+git clone --depth=1 https://github.com/immortalwrt/packages -b openwrt-21.02 packages
+git clone --depth=1 https://github.com/immortalwrt/luci -b openwrt-21.02 luci

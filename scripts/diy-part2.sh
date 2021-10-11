@@ -10,8 +10,6 @@
 # Description: OpenWrt DIY script part 2 (After Update feeds)
 #
 
-# Modify default IP
-sed -i 's/192.168.1.1/192.168.10.1/g' package/base-files/files/bin/config_generate
 
 # Add luci-app-ssr-plus
 pushd package/lean
@@ -27,8 +25,8 @@ git clone --depth=1 https://github.com/Lienol/openwrt-package
 rm -rf ../lean/luci-app-kodexplorer
 
 # Add immortalwrt's Packages
-git clone --depth=1 -b openwrt-18.06 https://github.com/immortalwrt/packages
-git clone --depth=1 -b openwrt-18.06-k5.4 https://github.com/immortalwrt/luci
+git clone --depth=1 -b openwrt-21.02 https://github.com/immortalwrt/packages
+git clone --depth=1 -b openwrt-21.02 https://github.com/immortalwrt/luci
 cp -r ../luci/applications/luci-app-adguardhome ../package/lean//luci-app-adguardhome
 
 # Add luci-app-passwall
@@ -37,10 +35,6 @@ git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall
 # Add luci-app-vssr <M>
 git clone --depth=1 https://github.com/jerrykuku/lua-maxminddb.git
 git clone --depth=1 https://github.com/jerrykuku/luci-app-vssr
-
-# Add luci-proto-minieap
-git clone --depth=1 https://github.com/ysc3839/luci-proto-minieap
-
 
 # Add OpenClash
 git clone --depth=1 -b master https://github.com/vernesong/OpenClash
@@ -54,21 +48,6 @@ mkdir parted
 cp luci-app-diskman/Parted.Makefile parted/Makefile
 
 
-# Add luci-theme-argon
-git clone --depth=1 -b 18.06 https://github.com/jerrykuku/luci-theme-argon
-git clone --depth=1 https://github.com/jerrykuku/luci-app-argon-config
-rm -rf ../lean/luci-theme-argon
-
-
-# Add luci-udptools
-svn co https://github.com/zcy85611/Openwrt-Package/trunk/luci-udptools
-svn co https://github.com/zcy85611/Openwrt-Package/trunk/udp2raw
-svn co https://github.com/zcy85611/Openwrt-Package/trunk/udpspeeder-tunnel
-
-
-# Add luci-app-oled (R2S Only)
-git clone --depth=1 https://github.com/NateLol/luci-app-oled
-
 popd
 
 # Mod zzz-default-settings
@@ -76,18 +55,6 @@ pushd package/lean/default-settings/files
 sed -i '/http/d' zzz-default-settings
 export orig_version="$(cat "zzz-default-settings" | grep DISTRIB_REVISION= | awk -F "'" '{print $2}')"
 sed -i "s/${orig_version}/${orig_version} ($(date +"%Y-%m-%d"))/g" zzz-default-settings
-popd
-
-# Use Lienol's https-dns-proxy package
-pushd feeds/packages/net
-rm -rf https-dns-proxy
-svn co https://github.com/Lienol/openwrt-packages/trunk/net/https-dns-proxy
-popd
-
-# Use snapshots' syncthing package
-pushd feeds/packages/utils
-rm -rf syncthing
-svn co https://github.com/openwrt/packages/trunk/utils/syncthing
 popd
 
 
